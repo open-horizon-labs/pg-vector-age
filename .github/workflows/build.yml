@@ -17,9 +17,9 @@ jobs:
       matrix:
         include:
           - platform: linux/amd64
-            runs-on: ubuntu-latest
+            runs-on: namespace-profile-cached
           - platform: linux/arm64
-            runs-on: namespace-profile-default-arm64
+            runs-on: namespace-profile-cached-arm64
     runs-on: ${{ matrix.runs-on }}
     permissions:
       contents: read
@@ -47,8 +47,8 @@ jobs:
           platforms: ${{ matrix.platform }}
           push: ${{ github.event_name != 'pull_request' }}
           outputs: type=image,name=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true
-          cache-from: type=gha,scope=${{ matrix.platform }}
-          cache-to: type=gha,mode=max,scope=${{ matrix.platform }}
+          cache-from: type=local,src=/tmp/buildx-cache
+          cache-to: type=local,dest=/tmp/buildx-cache,mode=max
 
       - name: Export digest
         if: github.event_name != 'pull_request'
