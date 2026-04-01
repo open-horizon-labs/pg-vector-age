@@ -27,6 +27,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libssl-dev \
     libkrb5-dev \
     libcurl4-openssl-dev \
+    liblz4-dev \
+    libzstd-dev \
     postgresql-server-dev-${PG_MAJOR} \
     && rm -rf /var/lib/apt/lists/*
 
